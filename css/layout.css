@@ -1,8 +1,19 @@
+body {
+	background-color: #2b2b2b;
+}
+
 #wrapper { 
-	width:800px;
-	height:600px;
-	position:absolute;
-	left:50%;
-	top:50%;
-	margin:-300px 0 0 -400px;
+	width: 800px;
+	height: 600px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -300px 0 0 -400px;
+	padding: 2 10 2 10;
+	border-radius: 15px;
+	background-color: #000;
+}
+
+.mejs-container .mejs-controls { 
+	visibility: hidden !important;
 }
