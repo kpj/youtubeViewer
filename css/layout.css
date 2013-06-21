@@ -14,6 +14,17 @@ body {
 	background-color: #000;
 }
 
+.error {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -100px 0 0 -150px;
+	padding: 2 10 2 10;
+	border-radius: 15px;
+	background-color: red;
+}
+
+
 .mejs-container .mejs-controls { 
 	visibility: hidden !important;
 }

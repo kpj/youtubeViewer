@@ -1,3 +1,15 @@
+// display error messages
+function showError(msg) {
+	var errDiv = document.createElement("div");
+
+	errDiv.innerHTML = msg;
+	errDiv.className = "error";
+
+	document.getElementById("wrapper").appendChild(errDiv);
+
+	throw msg;
+}
+
 // some global variables
 var globalPlayer = null;
 
@@ -15,15 +27,18 @@ var globalPlayer = null;
 // check if needed ones are given
 if($_GET["id"] == undefined || $_GET["time"] == undefined) {
 	document.write("GET parameters: id (id of youtube video) and time (format: hh:mm:ss)");
-	throw "Missing arguments";
+	showError("Missing arguments");
 }
 
 // parse time ; format: "hour:minute:second"
 var playTime = $_GET["time"].split(":");
+if(playTime.length != 3) {
+	showError("Poorly formatted time");
+}
 var now = new Date();
 var then = new Date(now.getFullYear(), now.getMonth(), now.getDate(), playTime[0], playTime[1], playTime[2], 0);
 if(then < now) {
-	throw "Time set in the past";
+	showError("Time set in the past");
 }
 
 setTimeout(function() {
