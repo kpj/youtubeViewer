@@ -52,6 +52,7 @@ var url = "http://www.youtube.com/watch?v=" + id;
 
 // set source when player is ready
 $('#video').mediaelementplayer({
+	features: ["postroll"],
 	success: function(media, node, player) {
 		globalPlayer = player;
 
