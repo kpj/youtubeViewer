@@ -1,12 +1,3 @@
-function applySource(u) {
-	globalPlayer.setSrc(u);
-
-	// start buffering ??!?!??!?!??!
-	//globalPlayer.load();
-	//globalPlayer.play();
-	//globalPlayer.pause();
-}
-
 // some global variables
 var globalPlayer = null;
 
@@ -49,7 +40,16 @@ $('#video').mediaelementplayer({
 	success: function(media, node, player) {
 		globalPlayer = player;
 
+		// set url
 		console.log("Setting source to \"" + url + "\"");
-		applySource(url);
+		globalPlayer.setSrc(url);
+
+		// enable auto buffering
+		media.addEventListener("canplay", function() {
+			globalPlayer.setMuted(true);
+			globalPlayer.play();
+			globalPlayer.pause();
+			globalPlayer.setMuted(false);
+		});
 	}
 });
