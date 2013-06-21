@@ -23,6 +23,7 @@ var globalPlayer = null;
 
 // check if needed ones are given
 if($_GET["id"] == undefined || $_GET["time"] == undefined) {
+	document.write("GET parameters: id (id of youtube video) and time (format: hh:mm:ss)");
 	throw "Missing arguments";
 }
 
