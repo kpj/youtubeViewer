@@ -37,7 +37,8 @@ window.onload = function() {
 	document.getElementById("time").addEventListener("keyup", function() {
 		if(correctTimeFormat(document.getElementById("time").value)) {
 			document.getElementById("time").className = "right";
-			document.getElementById("submit").disabled = false;
+			if(document.getElementById("submit").value != "Invalid url")
+				document.getElementById("submit").disabled = false;
 		} else {
 			document.getElementById("time").className = "wrong";
 			document.getElementById("submit").disabled = true;
