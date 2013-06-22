@@ -35,20 +35,27 @@ function correctTimeFormat(t) {
 window.onload = function() {
 	// check time format
 	document.getElementById("time").addEventListener("keyup", function() {
-		if(correctTimeFormat(document.getElementById("time").value))
+		if(correctTimeFormat(document.getElementById("time").value)) {
 			document.getElementById("time").className = "right";
-		else
+			document.getElementById("submit").disabled = false;
+		} else {
 			document.getElementById("time").className = "wrong";
+			document.getElementById("submit").disabled = true;
+		}
+	});
+
+	var url;
+	chrome.tabs.getSelected(function(tab) {
+		url = tab.url;
+		if(! url.startsWith("http://www.youtube.com/watch?v=")) {
+			document.getElementById("submit").disabled = true;
+			document.getElementById("submit").value = "Invalid url";
+			throw "Wrong url";
+		}
 	});
 
 	// set onClick handler
 	document.getElementById("submit").onclick = function() {
-		chrome.tabs.getSelected(function(tab) {
-			var url = tab.url;
-
-			if(! url.startsWith("http://www.youtube.com/watch?v=")) {
-				throw "Wrong url";
-			}
 			var parts = url.split("v=");
 			var id = parts[1];
 			console.log("Extracted: \""+id+"\"");
@@ -58,6 +65,5 @@ window.onload = function() {
 			chrome.tabs.create({'url': newUrl}, function(tab) {
 				console.log("Loaded \""+newUrl+"\"");
 			});
-		});
 	};
 }

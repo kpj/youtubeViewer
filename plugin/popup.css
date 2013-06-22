@@ -1,7 +1,9 @@
 .wrong {
-	background-color: red;
+	background-color: #FF8080;
+	transition: all 1s ease-in-out;
 }
 
 .right {
-	background-color: green;
+	background-color: #4DFF4D;
+	transition: all 1s ease-in-out;
 }
