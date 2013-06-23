@@ -31,11 +31,11 @@ window.onload = function() {
 		});
 
 		if(fields[i] == "h")
-			document.getElementById("time_h").value = then.getHours();
+			document.getElementById("time_h").value = (then.getHours() < 10?'0':'') + then.getHours();
 		else if(fields[i] == "m")
-			document.getElementById("time_m").value = then.getMinutes();
+			document.getElementById("time_m").value = (then.getMinutes()<10?'0':'') + then.getMinutes();
 		else
-			document.getElementById("time_s").value = then.getSeconds();
+			document.getElementById("time_s").value = (then.getSeconds() < 10?'0':'') + then.getSeconds();
 	}
 	
 	var url;
