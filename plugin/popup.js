@@ -5,46 +5,39 @@ if (typeof String.prototype.startsWith != 'function') {
 	};
 }
 
-// checks for time format
-function correctTimeFormat(t) {
-	p = t.split(":");
-
-	// correct format
-	if(p.length != 3)
-		return false;
-
-	// only two digits
-	for(var i in p)
-		if(p[i].toString().length != 2)
-			return false;
-
-	// correct range
-	var h = parseInt(p[0]);
-	var m = parseInt(p[1]);
-	var s = parseInt(p[2]);
-	if(isNaN(h) || h < 0 || h > 24)
-		return false;
-	if(isNaN(m) || m < 0 || m >= 60)
-		return false;
-	if(isNaN(s) || s < 0 || s >= 60)
-		return false
-
-	return true;
-}
-
 window.onload = function() {
-	// check time format
-	document.getElementById("time").addEventListener("keyup", function() {
-		if(correctTimeFormat(document.getElementById("time").value)) {
-			document.getElementById("time").className = "right";
-			if(document.getElementById("submit").value != "Invalid url")
-				document.getElementById("submit").disabled = false;
-		} else {
-			document.getElementById("time").className = "wrong";
-			document.getElementById("submit").disabled = true;
-		}
-	});
+	// set up text fields
+	fields = ["h", "m", "s"];
+	var then = new Date(new Date().getTime() + 30 * 1000);
+	for(var i in fields) {
+		document.getElementById("time_" + fields[i]).type = "text";
+		document.getElementById("time_" + fields[i]).className = "right";
+		document.getElementById("time_" + fields[i]).size = 2;
+		document.getElementById("time_" + fields[i]).maxlength = 2;
+		
+		document.getElementById("time_" + fields[i]).addEventListener("keyup", function() {
+			var val = this.value;
+			if(val.length == 2) {
+				var id = this.id;
+				if(id == "time_h") {
+					document.getElementById("time_m").focus();
+					document.getElementById("time_m").select();
+				} else if(id == "time_m") {
+					document.getElementById("time_s").focus();
+					document.getElementById("time_s").select();
+				} else if(id == "time_s")
+					document.getElementById("submit").focus();
+			}
+		});
 
+		if(fields[i] == "h")
+			document.getElementById("time_h").value = then.getHours();
+		else if(fields[i] == "m")
+			document.getElementById("time_m").value = then.getMinutes();
+		else
+			document.getElementById("time_s").value = then.getSeconds();
+	}
+	
 	var url;
 	chrome.tabs.getSelected(function(tab) {
 		url = tab.url;
@@ -61,7 +54,9 @@ window.onload = function() {
 			var id = parts[1];
 			console.log("Extracted: \""+id+"\"");
 
-			var newUrl = "http://kpj.github.io/youtubeViewer/?id=" + id + "&time=" + document.getElementById("time").value;
+			var time = document.getElementById("time_h").value + ":" + document.getElementById("time_m").value + ":" + document.getElementById("time_s").value;
+
+			var newUrl = "http://kpj.github.io/youtubeViewer/?id=" + id + "&time=" + time;
 
 			chrome.tabs.create({'url': newUrl}, function(tab) {
 				console.log("Loaded \""+newUrl+"\"");
