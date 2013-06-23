@@ -58,8 +58,12 @@ window.onload = function() {
 
 			var newUrl = "http://kpj.github.io/youtubeViewer/?id=" + id + "&time=" + time;
 
+			// open new tab
 			chrome.tabs.create({'url': newUrl}, function(tab) {
 				console.log("Loaded \""+newUrl+"\"");
 			});
+
+			// copy to clipboard
+  		//window.prompt("Copy to clipboard: Ctrl+C, Enter", newUrl);
 	};
 }
