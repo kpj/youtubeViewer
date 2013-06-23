@@ -6,6 +6,9 @@ if (typeof String.prototype.startsWith != 'function') {
 }
 
 window.onload = function() {
+	// variables
+	var invalidUrlString = "Invalid url";
+
 	// set up text fields
 	fields = ["h", "m", "s"];
 	var then = new Date(new Date().getTime() + 30 * 1000);
@@ -56,7 +59,14 @@ window.onload = function() {
 
 				if(val.toString().length != 2)
 					this.className = "wrong";
-			}	
+			}
+
+			if(this.className == "wrong")
+				document.getElementById("submit").disabled = true;
+			else {
+				if(document.getElementById("time_h").className == "right" && document.getElementById("time_m").className == "right" && document.getElementById("time_s").className == "right" && document.getElementById("submit").value != invalidUrlString)
+					document.getElementById("submit").disabled = false;
+			}
 		});
 		
 		document.getElementById("time_" + fields[i]).addEventListener("keydown", function(e) {
@@ -79,7 +89,7 @@ window.onload = function() {
 		url = tab.url;
 		if(! url.startsWith("http://www.youtube.com/watch?v=")) {
 			document.getElementById("submit").disabled = true;
-			document.getElementById("submit").value = "Invalid url";
+			document.getElementById("submit").value = invalidUrlString;
 			throw "Wrong url";
 		}
 	});
