@@ -43,7 +43,7 @@ if(then < now) {
 
 setTimeout(function() {
 	console.log("Starting video");
-	globalPlayer.play();
+	play();
 }, then - now);
 
 // parse id ; format: "http://www.youtube.com/watch?v=id"
@@ -63,8 +63,8 @@ $('#video').mediaelementplayer({
 		// enable auto buffering
 		media.addEventListener("canplay", function() {
 			globalPlayer.setMuted(true);
-			globalPlayer.play();
-			globalPlayer.pause();
+			play();
+			pause();
 			globalPlayer.setMuted(false);
 		});
 	}
